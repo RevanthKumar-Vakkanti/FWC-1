@@ -1,0 +1,286 @@
+\documentclass[10pt,-letter paper]{article}
+\usepackage[left=1in, right=0.75in, top=1in, bottom=0.75in]{geometry}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{siunitx}
+\usepackage{setspace}
+\usepackage{gensymb}
+\usepackage{xcolor}
+\usepackage{caption}
+%\usepackage{subcaption}
+\doublespacing
+\singlespacing
+\usepackage[none]{hyphenat}
+\usepackage{amssymb}
+\usepackage{relsize}
+\usepackage[cmex10]{amsmath}
+\usepackage{mathtools}
+\usepackage{amsmath}
+\usepackage{commath}
+\usepackage{amsthm}
+\interdisplaylinepenalty=2500
+%\savesymbol{iint}
+\usepackage{txfonts}
+%\restoresymbol{TXF}{iint}
+\usepackage{wasysym}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{txfonts}
+\let\vec\mathbf{}
+\usepackage{stfloats}
+\usepackage{float}
+\usepackage{cite}
+\usepackage{cases}
+\usepackage{subfig}
+%\usepackage{xtab}
+\usepackage{longtable}
+\usepackage{multirow}
+%\usepackage{algorithm}
+\usepackage{amssymb}
+%\usepackage{algpseudocode}
+\usepackage{enumitem}
+\usepackage{mathtools}
+%\usepackage{eenrc}
+%\usepackage[framemethod=tikz]{mdframed}
+\usepackage{listings}
+%\usepackage{listings}
+\usepackage[latin1]{inputenc}
+%%\usepackage{color}{   
+%%\usepackage{lscape}
+\usepackage{textcomp}
+\usepackage{titling}
+\usepackage{hyperref}
+%\usepackage{fulbigskip}   
+\usepackage{tikz}
+\usepackage{graphicx}
+\lstset{frame=single,breaklines=true}
+\let\vec\mathbf{}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\let\vec\mathbf{}
+\usepackage{enumitem}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{tfrupee}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mwe} % for blindtext and example-image-a in example
+\usepackage{wrapfig}
+\graphicspath{{figs/}}
+\providecommand{\cbrak}[1]{\ensuremath{\left\{#1\right\}}}
+\providecommand{\brak}[1]{\ensuremath{\left(#1\right)}}
+\newcommand{\sgn}{\mathop{\mathrm{sgn}}}
+\providecommand{\abs}[1]{\left\vert#1\right\vert}
+\providecommand{\res}[1]{\Res\displaylimits_{#1}} 
+\providecommand{\norm}[1]{\left\lVert#1\right\rVert}
+%\providecommand{\norm}[1]{\lVert#1\rVert}
+\providecommand{\mtx}[1]{\mathbf{#1}}
+\providecommand{\mean}[1]{E\left[ #1 \right]}
+\providecommand{\fourier}{\overset{\mathcal{F}}{ \rightleftharpoons}}
+%\providecommand{\hilbert}{\overset{\mathcal{H}}{ \rightleftharpoons}}
+\providecommand{\system}{\overset{\mathcal{H}}{ \longleftrightarrow}}
+%\newcommand{\solution}[2]{\textbf{Solution:}{#1}}
+%\newcommand{\solution}{\noindent \textbf{Solution: }}
+\newcommand{\cosec}{\,\text{cosec}\,}
+\providecommand{\dec}[2]{\ensuremath{\overset{#1}{\underset{#2}{\gtrless}}}}
+\newcommand{\myvec}[1]{\ensuremath{\begin{pmatrix}#1\end{pmatrix}}}
+\newcommand{\myaugvec}[2]{\ensuremath{\begin{amatrix}{#1}#2\end{amatrix}}}
+\newcommand{\mydet}[1]{\ensuremath{\begin{vmatrix}#1\end{vmatrix}}}
+\title{MATHEMATICS}
+\author{SECTION A}
+\date{\today}
+\begin{document}
+
+\maketitle
+
+\begin{enumerate}
+
+\section{Vectors}
+
+\item  Find the vector equation of the line passing through $\brak{2, 1, -1}$ and parallel to the line $\overrightarrow{r}=\brak{\hat{i}+\hat{j}}+\lambda\brak{2\hat{i}-\hat{j}+\hat{k}}$. Also, find the distance between these two lines.
+
+\item For any two vectors $\overrightarrow{a}$ and $\overrightarrow{b}$, prove that
+    \begin{align*}
+    \brak{{\overrightarrow{a} \times \overrightarrow{b}}}^{2} = {\overrightarrow{a}^{2}}~~{\overrightarrow{b}^{2}} - \brak{{\overrightarrow{a} \cdot \overrightarrow{b}}}^{2} 
+    \end{align*}
+
+\item Find the equation of planes passing through the intersection  of the planes $\overrightarrow{r} \cdot \brak{2\hat{i}+6\hat{j}}+12=0$ and $\overrightarrow{r} \cdot \brak{3\hat{i}-\hat{j}+4\hat{k}}=0$ and are at a unit distance from origin.
+
+\item Using vectors, find the value of $x$ such that the four points $\mathbf{A}$ $\brak{x,5,-1}$,$\mathbf{B}$ $\brak{3,2,1}$,$\mathbf{C}$ $\brak{4,5,5}$ and $\mathbf{D}$ $\brak{4,2,-2}$ are coplanar.
+
+\item Find the angle between the line $\overrightarrow{r}=\brak{2\hat{i}-\hat{j}+3\hat{k}}+\lambda\brak{3\hat{i}-\hat{j}+2\hat{k}}$ and the plane $\overrightarrow{r}.\brak{\hat{i}+\hat{j}+\hat{k}}=3$.
+
+\item Using vectors, prove that the points $\brak{2,-1,3},\brak{3,-5,1}$ and $\brak{-1,11,9}$ are collinear.
+
+\section{Matrices}
+
+\item Find the value of $\brak{x-y}$ from the matrix equation $2\myvec{x & 5 \\ 7 & y-3} + \myvec{-3 & -4 \\ 1 & 2}= \myvec{7 & 6 \\ 15 & 14}$
+
+\item Using elementary row transformations, find the inverse of the matrix $\myvec{3 & 0 & -1\\
+	2 & 3 & 0\\
+	0 & 4 & 1\\}$.
+
+\item If $A =\myvec{8 & 2\\3 & 2}$, then find $\mydet{\textsl{adj}~A}$
+
+\item Using the properties of determinants, prove the following :
+    \begin{align*}
+    \mydet{a^{2} & bc & ac+c^{2} \\ a^{2} & b^{2} & ac \\ ab & b^{2}+bc & c^{2} } = 4a^{2}b^{2}c^{2} 
+    \end{align*}
+
+ \item If $x$, $y$, $z$ are different and $\Delta=\mydet{x & x^2 & x^3 -1\\y & y^2 & y^3 -1\\z & z^2 & z^3 -1} = 0$, then using properties of determinants, show that $xyz = 1$.
+
+\item Using matrices, solve the following system of linear equations:
+ \begin{align*}
+  2x+3y+10z=4\\
+  4x-6y+5z=1\\
+  6x+9y-20z=2
+ \end{align*}
+
+\item Find the equation of the plane passing through $\brak{-1,3,2}$ and perpendicular to the planes $x+2y+3z=5$ and $3x+3y+z=0$.
+
+\item If $A$ is a square matrix of order $2$ and $\mydet{A}$ = $4$, then find the value of $\mydet{2\cdot AA'}$, where $A'$ is the transpose of matrix $A$.
+  
+\section{Probability}
+     
+\item If $A$ and $B$ are independent events with $P\brak{A}=\frac{3}{7}$ and $P\brak{B}=\frac{2}{5}$, then find $P\brak{A'\bigcap B'}$.
+
+\item If $P\brak{A}=0.6$, $P\brak{B}=0.5$ and $P\brak{B\mid A}=0.4$, find $P\brak{A\cup B}$ and $P\brak{A\mid B}$.
+    
+\item The probability of two students $A$ and $B$ coming to school on time are $\frac{2}{7}$ and $\frac{4}{7}$, respectively. Assuming that the events '$A$ coming on time' and '$B$ coming on time' are independent, find the probability of only one of them coming to school on time.
+
+\item A bag contains $5$ red and $3$ black balls and another bag contains $2$ red and $6$ black balls. Two balls are drawn at random (without~replacement) from one of the bags and both are found to be red. Find the probability that balls are drawn from the first bag.
+
+\item In answering a question on a multiple choice questions test with four choices in each questions, out of which only one is correct, a student either guesses or copies or knows the answer. The probability that he makes a guess is $\frac{1}{4}$ and the probability the he copies is also $\frac{1}{4}$. The probability that the answer is correct, given that he copied it is $\frac{3}{4}$. Find the probability that he knows the answer to the question, given that  he correctly answered it.
+
+\item A card from a pack of $52$ playing cards is lost. From the remaining cards of the pack, two cards are drawn at random (without~replacement) and both are found to be spades. Find the probability of the lost card being a spade.
+
+\item Four cards are drawn one by one with replacement from a well-shuffled deck of playing cards. Find the probability that at least three cards are of diamonds.
+
+\section{Differentiation}
+
+\item Find the differential equation representing the family of curves $y=-A \cos 3x+B \sin 3x$.
+
+\item Find the differential of the function $\cos^{-1}\brak{\sin 2x}$ w.r.t. $x$.
+
+\item Find the differential equation of the family of curves represented by ${y}^2 = a\brak{{b}^2 - {x}^2}$.
+    
+\item  If $\sqrt{1 - {x}^2} + \sqrt{1 - {y}^2} = a\brak{x - y}, \mydet{x}<1, \mydet{y}<1\text{, show that  }\dfrac{dy}{dx} = \sqrt{\dfrac{1 -{y}^2}{1 - {x}^2}}$.
+
+\item If $y = 2\sqrt{\sec\brak{e^{2x}}}$, then find $\dfrac{dy}{dx}$.
+
+\item Find the particular solution of the differential equation: $\brak{1+e^{2x}}{dy}+\brak{1+y{^2}}{e^{x}{dx}}=0$, given that $y\brak{0}=1$.
+
+\item If $X^{p}y^{q}= \brak{x+y}^{p+q}$, prove that $\dfrac{dy}{dx}=\frac{y}{x}$ and $\dfrac{d^{2}y}{dx^{2}}=0$.
+
+\item Find the order of the differential equation of the family of circles of radius $3$ units.
+
+\item Find the particular solution of the differential equation: $x\frac{dy}{dx}\sin\brak{\frac{y}{x}}+x-y\sin\brak{\frac{y}{x}}=0$,given that $y\brak1=\frac{\pi}{2}$.
+
+\item If $y=5e^{7x}+6e^{-7x}$, show that $\frac{d^2{y}}{d{x^2}}=49y$.
+
+\item Differentiate $\tan^{-1}\frac{3x-{x^3}}{1-3x^2},\vert{x}\vert<\frac{1}{\sqrt{3}}$w.r.t. $\tan^{-1}\frac{x}{\sqrt{1-x^2}}$.
+
+\item Solve the following differential equation :
+    \begin{align*}          
+    \brak{y + 3x^{2}}\frac{dx}{dy}=x
+    \end{align*}
+
+\item If $y = \brak{\sin{x}^x}+\sin^{-1}\brak{\sqrt{1-x^2}}$, then find $\frac{dy}{dx}$
+
+\section{Integration}
+
+\item Find:
+    \begin{align*}
+		\int\frac{x-1}{\brak{x-2}\brak{x-3}}dx
+    \end{align*}
+
+\item Find:
+	\begin{align*}
+		\int {e^x\brak{\frac{2+\sin 2x}{2 \cos^2 x}}} dx
+	\end{align*}
+
+\item  Find :
+    \begin{align*}
+        \int {e}^x\brak{\cos x - \sin x}\csc^2 x dx
+    \end{align*}
+
+\item Evaluate:
+  \begin{align*}
+    \int_{-1}^{2} \mydet{x^{3}-x}{dx}
+  \end{align*}
+  
+\item Find:
+    \begin{align*}
+    \int \brak{\sin x.\sin 2x. sin 3x}dx
+    \end{align*}
+
+\item Using integration, find the area of triangle $ABC$ bounded by the lines 
+   \begin{align*}
+        4x-y+5=0, x+y-5=0~\text{and}~x-4y+5=0.
+    \end{align*}
+
+\item Integrate:
+    \begin{align*}
+        \frac{e^x}{\sqrt{5-4e^x-e^{2x}}}
+    \end{align*} 
+with respect to $x$.  
+
+\item Evaluate: 
+    \begin{align*}
+        \int_{1}^{5} \brak{\vert{x-1}\vert+\vert{x-2}\vert+\vert{x-4}\vert}~dx
+    \end{align*}
+ 
+\item Find:
+    \begin{align*}
+        \int\cos{2x}\cos{4x}\cos{6x}~dx
+    \end{align*}
+
+\section{Function}
+
+\item Find the interval in which the function $f$ given by $f\brak{x}=\sin2x+\cos2x,0\leq{x}\leq{\pi}$ is strictly decreasing.
+
+\item  Find whether the function $f\brak{x} = \cos\brak{2x + \dfrac{\pi}{4}}$; is increasing or decreasing in the interval $\dfrac{3\pi}{8} < x < \dfrac{5\pi}{8}$.
+%%%
+\item Prove that the relation $\mathbf{R}$ in the set $A = \cbrak{1,2,3,4,5,6,7}$ given by $\mathbf{R}=\cbrak{a,b}:\mydet{a-b}\text {is even }$ is an equivalence relation.
+
+\item Show that the function $f$ in $A = R-\{\frac{2}{3}\}$ defined as $f\brak{x} = \frac{4x+3}{6x-4}$ is one-one and onto. Hence, find $f^{-1}$.
+
+\section{Linear Form}
+
+\item Using integration, find the area of the following region:
+  \begin{align*}
+  \cbrak{\brak{x,y}:x^{2}+y^{2}\leq 16a^{2} and y^{2}\leq 6ax}
+  \end{align*}
+
+\section{Geometry}
+
+\item An isosceles triangle of vertical angle $2\theta$ is inscribed in a circle of radius $a$. show that the area of the triangle is maximum when $\theta=\dfrac{\pi}{6}$.
+
+\item Find the co-ordinates of the point, where the line $\frac{x+2}{1}=\frac{y-5}{3}=\frac{z+1}{5}$ cuts the yz-plane.
+
+\item Prove that the radius of the right circular cylinder of greatest curved surface area which can be inscribed in a given cone is half of that of the cone.
+
+\section{Algebra}
+
+\item Let an operation $\ast$ on the set of natural numbers $N$ be defined by $a \ast b = a^{b}$. Find 
+  \begin{enumerate}
+    \item whether $\ast$ is a binary or not, and 
+    \item if it is a binary, then is it commutative or not.
+  \end{enumerate}
+
+\item Prove that :
+    \begin{align*}
+       \sin^{-1}\frac{4}{5}+\tan^{-1}\frac{5}{12}+\cos^{-1}\frac{63}{65}=\frac{\pi}{2}
+    \end{align*}
+
+\item Find the coordinates of the foot $Q$ of the perpendicular drawn from the point $P\brak{1,3,4}$ to the plane $2x-y+z+3=0$. Find the distance $PQ$ and the image of $P$ treating the planes as a mirror.
+
+\section{Optimization}
+
+\item A company manufactures two types of novelty souvenirs made of plywood. Souvenirs of type $A$ require $5$ minutes each for cutting and $10$ minutes each for assembling. Souvenirs of type $B$ require $8$ minutes each for cutting and $8$ minutes each for assembling. There are $3$ hours $20$ minutes available for cutting and $4$ hours for assembling. The profit for type $A$ souvenirs is \rupee~$100$ each and for type $B$ souvenirs, profit is \rupee~$120$ each. How many souvenirs of each type should the company manufacture in order to maximise the profit ? Formulate the problem as a LPP and then solve it graphically.	
+
+\item The sum of the perimeters of circle and a square is $\mathbf{K}$, where $\mathbf{K}$ is some constant. Prove that the sum of their areas is least when the side of the square is twice the radius of the circle.
+
+
+\end{enumerate}
+\end{document}
