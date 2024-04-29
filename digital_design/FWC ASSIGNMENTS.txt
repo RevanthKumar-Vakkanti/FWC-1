@@ -1,0 +1,543 @@
+FWC: ASSIGNMENTS
+
+// -----------------------------------------------------------------FPGA: ------------------------------------------------------------------------------------------//
+
+module helloworldfpga(output reg LCD_RS,output reg LCD_E,output reg[7:4] DATA);
+
+wire clk;
+qlal4s3b_cell_macro u_qlal4s3b_cell_macro (  .Sys_Clk0 (clk), );//20Mhz clock
+integer i = 1;
+reg [25:0] count=0;
+reg [3:0] Datas [1:43];
+
+always @(posedge clk) begin
+Datas[1]   =  4'h3;     //-- initializing controller--
+Datas[2]   =  4'h3;   
+Datas[3]   =  4'h3;     //-- set to 4-bit input mode --
+Datas[4]   =  4'h2;     
+Datas[5]   =  4'h2;     //--2 line, 5x7 matrix  --
+Datas[6]   =  4'h8;     
+Datas[7]   =  4'h0;     //--turn cursor off (0x0E to enable) --
+Datas[8]   =  4'hC;     
+Datas[9]   =  4'h0;     //-- cursor direction = right --
+Datas[10]  =  4'h6;     
+Datas[11]  =  4'h0;     //--  start with clear display  --
+Datas[12]  =  4'h1;
+Datas[13]  =  4'h8; //starting from line 1
+Datas[14]  =  4'h0;
+Datas[15]  =  1'b1;
+Datas[16]  =  4'h3;//1=0X31
+Datas[17]  =  4'h1;   
+Datas[18]  =  4'h3;//1==0X31
+Datas[19]  =  4'h1;
+Datas[20]  =  4'h3;//1=0X31;       
+Datas[21]  =  4'h1;
+Datas[22]  =  4'h3;//1=0X31;       
+Datas[23]  =  4'h1;
+Datas[24]  =  4'h2;//SPACE=0X20
+Datas[25]  =  4'h0;
+Datas[26]  =  4'h3;//0=0X30
+Datas[27]  =  4'h0;
+Datas[28]  =  4'h3;//1=0X31
+Datas[29]  =  4'h1;
+Datas[30]  =  4'h3;//1=0X31
+Datas[31]  =  4'h1;
+Datas[32]  =  4'h3;//0=0X30
+Datas[33]  =  4'h0;
+Datas[34]  =  4'h2;//SPACE=0X20
+Datas[35]  =  4'h0;
+Datas[36]  =  4'h3;//1=0X31
+Datas[37]  =  4'h1;
+Datas[38]  =  4'h3;//1=0X31
+Datas[39]  =  4'h1;
+Datas[40]  =  4'h3;//0=0x30
+Datas[41]  =  4'h0;
+Datas[42]  =  4'h3;//0=0X30
+Datas[43]  =  4'h0;
+
+end
+always @(posedge clk) begin
+if (i<=14)begin
+  LCD_RS<=1'b0;
+  DATA=Datas[i];
+  LCD_E<=1'b1;
+  if (count==800)begin //waiting 40us
+      LCD_E<=1'b0;
+      count<=0;
+      i <= i + 1;
+      end
+  else
+      count<=count+1;
+
+  end
+if (i==15) begin
+  if (count==60000)begin//waiting 3ms
+        count<=0;
+        i<=i+1;
+        end
+  else
+        count<=count+1;
+  end
+if (i>15 & i<=43) begin 
+  LCD_RS<=1'b1;
+  DATA=Datas[i];
+        LCD_E<=1'b1;
+  if (count==800)begin //waiting 40us
+      LCD_E<=1'b0;
+      count<=0;
+            i <= i + 1;
+          end
+        else
+    count<=count+1;       
+        end
+if (i>43) 
+  i<=13;
+  
+end
+endmodule
+
+// ---------------------------------------------------------FPGA END------------------------------------------------------------------//
+
+
+
+// -------------------------------------------------------- ESP ------------------------------------------------------------------------//
+
+
+#include <WiFi.h>
+#include <WiFiUdp.h>
+#include <ArduinoOTA.h>
+#include <LiquidCrystal.h>
+
+#ifndef STASSID
+#define STASSID "vivo1902"  // Replace with your network credentials
+#define STAPSK  "12345678"  
+#endif
+
+LiquidCrystal lcd(19, 23, 18, 17, 16, 15);
+
+const char* ssid = STASSID;
+const char* password = STAPSK;
+
+void OTAsetup() {
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
+    delay(5000);
+    ESP.restart();
+  }
+  ArduinoOTA.begin();
+}
+
+void OTAloop() {
+  ArduinoOTA.handle();
+}
+
+void setup() {
+  OTAsetup();
+  lcd.begin(16, 2);
+  lcd.print("Frequency(Hz):");
+}
+
+void loop() {
+  OTAloop();
+  delay(10);
+
+  // Assuming you have the timer-counter configured and running in both time period and frequency modes,
+  // and you're getting the values correctly.
+
+  // For 'time period' mode of operation
+  unsigned long timePeriod_ns = 1000000; // Example value, replace it with the actual value
+  unsigned long frequency_Hz = 1000000000 / timePeriod_ns;
+
+  // For 'frequency' mode of operation
+  // Assuming you have the frequency value available
+  // unsigned long frequency_Hz = get_frequency(); // Example function to get frequency in Hz
+
+  // Ensure frequency is within the desired range (999 - 1001)
+  if (frequency_Hz < 999) {
+    frequency_Hz = 999;
+  } else if (frequency_Hz > 1001) {
+    frequency_Hz = 1001;
+  }
+
+  lcd.setCursor(0, 1); // Set cursor to the second row
+  lcd.print(frequency_Hz);
+
+  delay(1000); // Delay for stability, adjust as necessary
+}
+
+
+// -----------------------------------------------------------------ESP END-------------------------------------------------------------------//
+
+
+// ------------------------------------------------------------------- ARM -------------------------------------------------------------//
+
+
+/*==========================================================
+Code by G V V Sharma
+Apr 9, 2021,
+Released under GNU/GPL
+https://www.gnu.org/licenses/gpl-3.0.en.html
+/*==========================================================
+ *
+ *    File   : main.c
+ *    Purpose: main for Pygmy Seven Segment Display Counter
+ *                                                          
+ *=========================================================*/
+
+#include "Fw_global_config.h"   // This defines application specific charactersitics
+
+#include <stdio.h>
+#include "FreeRTOS.h"
+#include "task.h"
+#include "semphr.h"
+#include "timers.h"
+#include "RtosTask.h"
+
+/*    Include the generic headers required for QORC */
+#include "eoss3_hal_gpio.h"
+#include "eoss3_hal_rtc.h"
+#include "eoss3_hal_timer.h"
+#include "eoss3_hal_fpga_usbserial.h"
+#include "ql_time.h"
+#include "s3x_clock_hal.h"
+#include "s3x_clock.h"
+#include "s3x_pi.h"
+#include "dbg_uart.h"
+
+#include "cli.h"
+
+
+extern const struct cli_cmd_entry my_main_menu[];
+
+
+const char *SOFTWARE_VERSION_STR;
+
+
+/*
+ * Global variable definition
+ */
+
+
+extern void qf_hardwareSetup();
+static void nvic_init(void);
+#define GPIO_OUTPUT_MODE (1)
+#define GPIO_INPUT_MODE (0)
+void PyHal_GPIO_SetDir(uint8_t gpionum,uint8_t iomode);
+int PyHal_GPIO_GetDir(uint8_t gpionum);
+int PyHal_GPIO_Set(uint8_t gpionum, uint8_t gpioval);
+int PyHal_GPIO_Get(uint8_t gpionum);
+
+
+void sevenseg_setup(void);
+void sevenseg(int a, int b, int c, int d, int e, int f, int g);
+void disp(int num);
+
+int main(void)
+{
+    uint32_t i=0,j=0,k=0;
+    SOFTWARE_VERSION_STR = "qorc-onion-apps/qf_hello-fpga-gpio-ctlr";
+    
+    qf_hardwareSetup();
+    nvic_init();
+
+    dbg_str("\n\n");
+    dbg_str( "##########################\n");
+    dbg_str( "Quicklogic QuickFeather FPGA GPIO CONTROLLER EXAMPLE\n");
+    dbg_str( "SW Version: ");
+    dbg_str( SOFTWARE_VERSION_STR );
+    dbg_str( "\n" );
+    dbg_str( __DATE__ " " __TIME__ "\n" );
+    dbg_str( "##########################\n\n");
+
+    dbg_str( "\n\nHello GPIO!!\n\n");	// <<<<<<<<<<<<<<<<<<<<<  Change me!
+
+    CLI_start_task( my_main_menu );
+	HAL_Delay_Init();
+
+    sevenseg_setup();    //Sevenseg ready for display
+    //Seven Segment GPIO
+  sevenseg(0,0,0,1,1,1,1);//The number 7
+    
+ //Seven Segment GPIO
+while(1){
+	disp(i); //display number
+	HAL_DelayUSec(1000000);    
+	i++;
+	if (i == 10)
+		i = 0;
+}
+
+
+    /* Start the tasks and timer running. */
+    vTaskStartScheduler();
+    dbg_str("\n");
+
+    while(1);
+}
+
+static void nvic_init(void)
+ {
+    // To initialize system, this interrupt should be triggered at main.
+    // So, we will set its priority just before calling vTaskStartScheduler(), not the time of enabling each irq.
+    NVIC_SetPriority(Ffe0_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
+    NVIC_SetPriority(SpiMs_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
+    NVIC_SetPriority(CfgDma_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
+    NVIC_SetPriority(Uart_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
+    NVIC_SetPriority(FbMsg_IRQn, configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY);
+ }    
+
+void sevenseg(int a, int b, int c, int d, int e, int f, int g)
+
+{
+    //Seven Segment GPIO
+    PyHal_GPIO_Set(4,a);//a
+    PyHal_GPIO_Set(5,b);//b
+    PyHal_GPIO_Set(6,c);//c
+    PyHal_GPIO_Set(7,d);//d
+    PyHal_GPIO_Set(8,e);//e
+    PyHal_GPIO_Set(10,f);//f
+    PyHal_GPIO_Set(11,g);//g
+}
+
+//needed for startup_EOSS3b.s asm file
+void SystemInit(void)
+{
+
+}
+
+//gpionum --> 0 --> 31 corresponding to the IO PADs
+//gpioval --> 0 or 1
+#define FGPIO_DIRECTION_REG (0x40024008)
+#define FGPIO_OUTPUT_REG (0x40024004)
+#define FGPIO_INPUT_REG (0x40024000)
+//Set GPIO(=gpionum) Mode: Input(iomode = 0) or Output(iomode = 1)
+//Before Set/Get GPIO value, the direction must be correctly set
+void PyHal_GPIO_SetDir(uint8_t gpionum,uint8_t iomode)
+{
+    uint32_t tempscratch32;
+
+    if (gpionum > 31)
+        return;
+
+    tempscratch32 = *(uint32_t*)(FGPIO_DIRECTION_REG);
+    if (iomode)
+        *(uint32_t*)(FGPIO_DIRECTION_REG) = tempscratch32 | (0x1 << gpionum);
+    else
+        *(uint32_t*)(FGPIO_DIRECTION_REG) = tempscratch32 & (~(0x1 << gpionum));
+
+}
+
+
+//Get current GPIO(=gpionum) Mode: Input(iomode = 0) or Output(iomode = 1)
+int PyHal_GPIO_GetDir(uint8_t gpionum)
+{
+    uint32_t tempscratch32;
+    int result = 0;
+
+    if (gpionum > 31)
+        return -1;
+
+    tempscratch32 = *(uint32_t*)(FGPIO_DIRECTION_REG);
+
+    result = ((tempscratch32 & (0x1 << gpionum)) ? GPIO_OUTPUT_MODE : GPIO_INPUT_MODE);
+
+    return result;
+}
+
+//Set GPIO(=gpionum) to 0 or 1 (= gpioval)
+//The direction must be set as Output for this GPIO already
+//Return value = 0, success OR -1 if error.
+int PyHal_GPIO_Set(uint8_t gpionum, uint8_t gpioval)
+{
+    uint32_t tempscratch32;
+
+    if (gpionum > 31)
+        return -1;
+
+    tempscratch32 = *(uint32_t*)(FGPIO_DIRECTION_REG);
+
+    //Setting Direction moved out as separate API, we will only check
+    //*(uint32_t*)(FGPIO_DIRECTION_REG) = tempscratch32 | (0x1 << gpionum);
+    if (!(tempscratch32 & (0x1 << gpionum)))
+    {
+        //Direction not Set to Output
+        return -1;
+    }
+    
+    tempscratch32 = *(uint32_t*)(FGPIO_OUTPUT_REG);
+
+    if(gpioval > 0)
+    {
+        *(uint32_t*)(FGPIO_OUTPUT_REG) = tempscratch32 | (0x1 << gpionum);
+    }
+    else
+    {
+        *(uint32_t*)(FGPIO_OUTPUT_REG) = tempscratch32 & ~(0x1 << gpionum);
+    }    
+
+    return 0;
+}
+//Get GPIO(=gpionum): 0 or 1 returned (or in erros -1)
+//The direction must be set as Input for this GPIO already
+int PyHal_GPIO_Get(uint8_t gpionum)
+{
+    uint32_t tempscratch32;
+    uint32_t gpioval_input;
+
+    if (gpionum > 31)
+        return -1;
+
+    tempscratch32 = *(uint32_t*)(FGPIO_INPUT_REG);
+    gpioval_input = (tempscratch32 >> gpionum) & 0x1;
+
+    return ((int)gpioval_input);
+}
+
+
+
+void sevenseg_setup(void)
+
+{
+
+    //Set GPIO direction
+    PyHal_GPIO_SetDir(4,1);
+    PyHal_GPIO_SetDir(5,1);
+    PyHal_GPIO_SetDir(6,1);
+    PyHal_GPIO_SetDir(7,1);    
+    PyHal_GPIO_SetDir(8,1);
+    PyHal_GPIO_SetDir(10,1);
+    PyHal_GPIO_SetDir(11,1);    
+
+}
+
+void disp(int num)
+{
+
+sevenseg(0,1,1,0,0,0,1);// C
+HAL_DelayUSec(1000000);
+sevenseg(1,1,1,1,1,1,1);
+HAL_DelayUSec(1000000);
+sevenseg(0,0,0,0,0,0,0);// 8
+HAL_DelayUSec(1000000);
+sevenseg(1,1,1,1,1,1,1);
+HAL_DelayUSec(1000000);
+sevenseg(0,0,0,0,0,0,1);// 0
+HAL_DelayUSec(1000000);
+sevenseg(1,1,1,1,1,1,1);
+HAL_DelayUSec(1000000);
+sevenseg(0,0,0,0,0,0,1);// 0
+HAL_DelayUSec(1000000);
+sevenseg(1,1,1,1,1,1,1);
+HAL_DelayUSec(2000000);
+sevenseg(0,1,1,0,0,0,1);// C
+HAL_DelayUSec(1000000);
+sevenseg(1,1,1,1,1,1,1);
+HAL_DelayUSec(1000000);
+sevenseg(0,1,1,1,0,0,0);// F
+HAL_DelayUSec(1000000);
+sevenseg(1,1,1,1,1,1,1);
+HAL_DelayUSec(1000000);
+sevenseg(0,1,1,1,0,0,0);// F
+HAL_DelayUSec(1000000);
+sevenseg(1,1,1,1,1,1,1);
+HAL_DelayUSec(1000000);
+
+}
+
+
+// --------------------------------------------------------------------ARM END--------------------------------------------------------------------//
+
+
+// ------------------------------------------------------------------AVR GCC---------------------------------------------------------------------//
+
+#include <avr/io.h>
+#include <util/delay.h>
+
+#define F1_PIN PB0
+#define F2_PIN PB1
+#define F3_PIN PB2
+#define OUTPUT_PIN PB5
+
+void setup_pins() {
+    // Set F1_PIN, F2_PIN, and F3_PIN as input
+    DDRB &= ~((1 << F1_PIN) | (1 << F2_PIN) | (1 << F3_PIN));
+
+    // Set OUTPUT_PIN as output
+    DDRB |= (1 << OUTPUT_PIN);
+}
+
+int main(void) {
+    setup_pins();
+
+    while(1) {
+        // Read the inputs
+        uint8_t f1 = PINB & (1 << F1_PIN);
+        uint8_t f2 = PINB & (1 << F2_PIN);
+        uint8_t f3 = PINB & (1 << F3_PIN);
+
+        // Implement the AND gate
+        uint8_t andGate = f1 && f2;
+
+        // Implement the XOR gate
+        uint8_t xorGate = andGate ^ f3;
+
+        // Write the output
+        if(xorGate) {
+            PORTB |= (1 << OUTPUT_PIN);
+        } else {
+            PORTB &= ~(1 << OUTPUT_PIN);
+        }
+
+        _delay_ms(100);
+    }
+
+    return 0;
+}
+
+
+//-------------------------------------------------------------AVR GCC END-----------------------------------------------------------------------//
+
+
+//------------------------------------------------------------ASSMEBLY------------------------------------------------------------------------//
+
+
+;hello
+;using assembly language for turning LED on
+
+
+.include "/sdcard/digital-design/assembly/setup/codes/m328Pdef.inc"
+.equ    LED_DDR = DDRB
+.equ    LED_PORT = PORTB
+.equ    LED_BIT = 5  ; Assuming LED is connected to pin 13 (PB5)
+
+main:
+    ; Vary the input states within the code
+    ldi r16, 0   ; s1
+    ldi r17, 1   ; s0
+
+    ; Compute the XOR result
+    eor r16, r17
+
+    ; Output the result to the LED pin
+    sbi LED_DDR, LED_BIT
+    out LED_PORT, r16
+
+    ; Add a delay to see the LED state
+    ldi r18, 100
+delay_loop:
+    dec r18
+    brne delay_loop
+
+    ; Infinite loop
+    rjmp main
+
+// ------------------------------------------------------ASSEMBLY END----------------------------------------------------------------------------//
+
+
+//----------------------------------------------------PLATFORMIO -------------------------------------------------------------------------------//
+
+
+
+
+
