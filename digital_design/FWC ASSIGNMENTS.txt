@@ -539,5 +539,35 @@ delay_loop:
 
 
 
+#include <Arduino.h>
+
+const int inputA = 2; // Connect input A to digital pin 2
+const int inputB = 3; // Connect input B to digital pin 3
+const int outputPin = 13; // Connect the output to built-in LED (pin 13)
+
+void setup() {
+    pinMode(inputA, INPUT);
+    pinMode(inputB, INPUT);
+    pinMode(outputPin, OUTPUT);
+}
+
+void loop() {
+    // Read the state of inputs A and B
+    int stateA = digitalRead(inputA);
+    int stateB = digitalRead(inputB);
+
+    // Perform XNOR operation
+    int result = (stateA == stateB) ? HIGH : LOW;
+
+    // Set the output
+    digitalWrite(outputPin, result);
+
+    // Add any other code or functionality here if needed
+}
+
+
+\\-------------------------------------------------------- END PLATFORMIO ---------------------------------------------------------------//
+
+
 
 
